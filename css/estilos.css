@@ -1,418 +1,194 @@
-/* estilos.css — versión revisada y comentada */
+/* ===========================================================
+   estilos.css — completo (responsive, accesible, animaciones)
+   =========================================================== */
 
-/* -----------------------------
-   Variables globales (colores, radios)
-   ----------------------------- */
+/* VARIABLES GLOBALES */
 :root {
-  --bg: #f5f7fa; /* color fondo claro */
-  --card: #ffffff; /* fondo de tarjetas/secciones */
-  --accent: #1f6feb; /* color principal (botones/enlaces) */
-  --muted: #6b7280; /* color texto secundario */
+  --bg: #f5f7fa;
+  --card: #ffffff;
+  --accent: #1f6feb;
+  --muted: #6b7280;
   --success: #16a34a;
   --danger: #ef4444;
-  --shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
+  --shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
   --radius: 14px;
   --spacing: 1rem;
   font-size: 16px;
 }
 
-/* Reseteo básico */
+/* RESET BÁSICO */
 * {
-  box-sizing: border-box;
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
 }
 
-/* Tipografía y fondo global */
+.sr-only {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
 body {
-  font-family: Inter, Roboto, system-ui;
+  font-family: Inter, Roboto, system-ui, -apple-system, "Segoe UI", Arial;
   background: var(--bg);
   color: #0f172a;
-  line-height: 1.55;
+  line-height: 1.6;
 }
 
-/* ===========================
-     HEADER
-     =========================== */
+/* HEADER */
 .site-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  background: var(--card);
   padding: 1rem 1.5rem;
-  background: #fff;
   box-shadow: var(--shadow);
-  position: sticky; /* queda fijo al top */
+  position: sticky;
   top: 0;
-  z-index: 10;
+  z-index: 20;
 }
 
 .brand h1 {
+  font-size: 1.5rem;
   margin-bottom: 0.2rem;
-  font-size: 1.4rem;
 }
-.tagline {
-  font-size: 0.9rem;
-  color: var(--muted);
+.tagline { color: var(--muted); font-size: .95rem; }
+
+/* USER AREA */
+.user-area { display: flex; align-items: center; gap: .6rem; }
+#avatar-placeholder img { width: 44px; height: 44px; border-radius: 50%; object-fit: cover; }
+
+/* NAV */
+.main-nav { background: var(--card); box-shadow: var(--shadow); margin-top: .4rem; }
+.main-nav ul { display: flex; gap: 1.2rem; padding: 0.7rem 1.2rem; list-style: none; flex-wrap: wrap; }
+.main-nav a { color: var(--accent); text-decoration: none; font-weight: 600; }
+.main-nav a:hover { text-decoration: underline; }
+
+/* MAIN / SECCIONES */
+main { max-width: 1100px; margin: auto; padding: 1rem; }
+section { background: var(--card); padding: 1.3rem; margin-bottom: 1.4rem; border-radius: var(--radius); box-shadow: var(--shadow); }
+section h2 { margin-bottom: .8rem; }
+.description { color: var(--muted); margin-bottom: .8rem; }
+
+/* FORMULARIOS */
+label { display: block; margin-bottom: .35rem; font-weight: 600; }
+input, select { width: 100%; padding: .55rem .75rem; border-radius: 8px; border: 1px solid #d4d7df; margin-bottom: .9rem; font-size: 1rem; background: white; color: inherit; }
+.form-actions { display: flex; gap: .8rem; flex-wrap: wrap; }
+.status { margin-top: .4rem; color: var(--muted); }
+
+/* BOTONES */
+button { background: var(--accent); border: none; color: #fff; padding: .55rem .9rem; border-radius: 8px; font-size: .95rem; cursor: pointer; transition: opacity .2s ease, transform .08s ease; }
+button:hover { opacity: .9; transform: translateY(-1px); }
+button.secondary { background: #e7efff; color: var(--accent); }
+button.secondary:hover { background: #d8e5ff; }
+
+/* SPINNER */
+.spinner { width: 36px; height: 36px; border: 4px solid #dfe3e8; border-top-color: var(--accent); border-radius: 50%; margin: 1rem auto; animation: spin 0.8s linear infinite; display: none; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ANIMACIONES */
+.highlight { animation: highlightFade 1.4s ease-out; }
+@keyframes highlightFade { 0% { background-color: #d1fae5; } 100% { background-color: transparent; } }
+
+.shake { animation: shakeAnim 0.3s ease-in-out; }
+@keyframes shakeAnim { 0%,100%{transform:translateX(0)} 25%{transform:translateX(-6px)} 75%{transform:translateX(6px)} }
+
+/* GRID / CARDS */
+.books-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1.2rem; padding: .5rem; list-style: none; }
+
+.book-card { display: flex; gap: .9rem; background: var(--card); padding: 1rem; border-radius: 12px; border: 1px solid #e6e9f0; box-shadow: var(--shadow); transition: transform .15s ease; }
+.book-card:hover { transform: translateY(-3px); }
+
+.book-card img { width: 75px; height: 110px; border-radius: 8px; object-fit: cover; }
+
+.book-meta { flex: 1; }
+.book-meta h3 { margin-bottom: .25rem; font-size: 1.05rem; }
+.book-meta p { color: var(--muted); font-size: .95rem; line-height: 1.25; }
+
+/* Previews S/M/L dentro de cada card */
+.covers-preview { display: flex; gap: .4rem; margin-top: .5rem; align-items: center; }
+.covers-preview img.preview-size { width: 32px; height: 48px; border-radius: 4px; object-fit: cover; border: 1px solid #e5e7eb; }
+
+/* ACTIONS dentro de card */
+.book-actions { display: flex; gap: .5rem; margin-top: .5rem; }
+
+/* SEARCH RESULTS */
+.grid-list { display: grid; gap: 1rem; margin-top: 1rem; }
+
+/* MODAL */
+.modal { position: fixed; inset: 0; background: rgba(0,0,0,.45); display: flex; align-items: center; justify-content: center; padding: 1rem; visibility: hidden; opacity: 0; transition: .3s; }
+.modal[aria-hidden="false"]{ visibility: visible; opacity: 1; }
+.modal-content { background: var(--card); padding: 1.3rem; border-radius: var(--radius); width: 100%; max-width: 360px; box-shadow: var(--shadow); }
+
+/* RESPONSIVE */
+@media (min-width: 900px) {
+  .grid-list { grid-template-columns: repeat(3, 1fr); }
 }
 
-.user-area {
-  display: flex;
-  align-items: center;
-  gap: 0.6rem;
+/* MODO OSCURO */
+@media (prefers-color-scheme: dark) {
+  :root { --bg: #0f172a; --card: #1e293b; --accent: #3b82f6; --muted: #94a3b8; --shadow: 0 4px 14px rgba(0,0,0,.45); color-scheme: dark; }
+  body { background: var(--bg); color: #f1f5f9; }
+  .site-header, .main-nav, section, .modal-content { background: var(--card); }
+  input, select { background: #0f172a; border: 1px solid #334155; color: #e2e8f0; }
+  .book-card { border: 1px solid #334155; }
+  .book-meta p, .description, .status, .tagline { color: var(--muted); }
 }
-
-/* placeholder del avatar (se inyecta imagen por JS) */
-#avatar-placeholder img {
-  width: 42px;
-  height: 42px;
-  border-radius: 50%;
-  object-fit: cover;
-}
-
-/* ===========================
-     NAV
-     =========================== */
-.main-nav {
-  background: #fff;
+.cover-select {
   margin-top: 0.4rem;
-  box-shadow: var(--shadow);
-}
-.main-nav ul {
   display: flex;
-  gap: 1.2rem;
-  list-style: none;
-  padding: 0.7rem 1.3rem;
-  flex-wrap: wrap;
-}
-.main-nav a {
-  text-decoration: none;
-  color: var(--accent);
-  font-weight: 500;
-}
-.main-nav a:hover {
-  text-decoration: underline;
+  gap: 0.4rem;
+  align-items: center;
 }
 
-/* ===========================
-     MAIN / SECCIONES
-     =========================== */
-main {
-  max-width: 1100px;
-  margin: auto;
-  padding: 1rem;
-}
-
-section {
-  background: var(--card);
-  padding: 1.3rem;
-  margin-bottom: 1.3rem;
-  border-radius: var(--radius);
-  box-shadow: var(--shadow);
-}
-section h2 {
-  margin-bottom: 0.8rem;
-  font-size: 1.25rem;
-}
-.description {
-  margin-bottom: 1rem;
+.cover-select label {
+  font-size: 0.85rem;
   color: var(--muted);
+  margin: 0;
 }
 
-/* ===========================
-     FORMULARIOS
-     =========================== */
-label {
-  display: block;
-  margin-bottom: 0.35rem;
+.cover-select select {
+  width: auto;
+  padding: 0.35rem 0.5rem;
+  font-size: 0.85rem;
+}
+/* Selector tamaño portada dentro de card y en resultados */
+.cover-select {
+  margin-top: 0.5rem;
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  flex-wrap: nowrap;
+}
+
+/* etiqueta pequeña y select compacto */
+.cover-select label {
+  font-size: 0.85rem;
+  color: var(--muted);
+  margin: 0;
+  white-space: nowrap;
+}
+.cover-select select {
+  width: 72px;
+  padding: .3rem .45rem;
+  border-radius: 6px;
+  border: 1px solid #d4d7df;
+  background: white;
   font-weight: 600;
 }
 
-input,
-select,
-textarea {
-  width: 100%;
-  padding: 0.55rem 0.7rem;
-  border-radius: 8px;
-  border: 1px solid #d6d9e0;
-  margin-bottom: 0.8rem;
-  font-size: 1rem;
-}
-
-.form-actions {
-  display: flex;
-  gap: 0.8rem;
-  flex-wrap: wrap;
-  margin-top: 0.5rem;
-}
-.status {
-  margin-top: 0.4rem;
-  color: var(--muted);
-}
-
-/* ===========================
-     BOTONES
-     =========================== */
-button {
-  background: var(--accent);
-  border: none;
-  color: white;
-  padding: 0.55rem 0.9rem;
-  font-size: 0.95rem;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: 0.2s;
-}
-
-button:hover {
-  opacity: 0.9;
-}
-
-button.secondary {
-  background: #e7efff;
-  color: var(--accent);
-}
-button.secondary:hover {
-  background: #d8e5ff;
-}
-
-/* ===========================
-     GRID / CARDS
-     =========================== */
-.books-list {
-  display: grid;
-  gap: 1rem;
-  list-style: none;
-}
-
-/* estilo base card */
-.book-card {
-  background: #fff;
-  border: 1px solid #e6e9f0;
-  border-radius: var(--radius);
-  padding: 0.9rem;
-  display: flex;
-  gap: 1rem;
-  align-items: flex-start;
-  box-shadow: var(--shadow);
-}
-.book-card img {
-  width: 90px;
-  height: 130px;
-  object-fit: cover;
-  border-radius: 8px;
-}
-.book-meta h3 {
-  margin-bottom: 0.3rem;
-  font-size: 1rem;
-}
-.book-meta p {
-  color: var(--muted);
-  margin-bottom: 0.5rem;
-}
-.book-actions {
-  display: flex;
-  gap: 0.5rem;
-  margin-top: 0.4rem;
-}
-
-/* arreglos responsive y compactos aplicados más abajo */
-
-/* ===========================
-     SEARCH RESULTS
-     =========================== */
-.grid-list {
-  display: grid;
-  gap: 1rem;
-  margin-top: 1rem;
-}
-
-/* ===========================
-     MODAL (login)
-     =========================== */
-.modal {
-  position: fixed;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: rgba(0, 0, 0, 0.45);
-  padding: 1rem;
-  visibility: hidden; /* se controla con aria-hidden */
-  opacity: 0;
-  transition: 0.3s;
-}
-.modal[aria-hidden="false"] {
-  visibility: visible;
-  opacity: 1;
-}
-
-.modal-content {
-  background: #fff;
-  width: 100%;
-  max-width: 340px;
-  padding: 1.3rem;
-  border-radius: var(--radius);
-  box-shadow: var(--shadow);
-}
-
-/* ===========================
-     RESPONSIVE BASICO
-     =========================== */
-@media (min-width: 600px) {
-  .books-list {
-    grid-template-columns: repeat(2, 1fr);
-  }
-  .grid-list {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-@media (min-width: 900px) {
-  .books-list {
-    grid-template-columns: repeat(3, 1fr);
-  }
-  .grid-list {
-    grid-template-columns: repeat(3, 1fr);
-  }
-}
-
-/* ===========================
-     MODO OSCURO AUTOMÁTICO
-     =========================== */
+/* Ajuste para modo oscuro */
 @media (prefers-color-scheme: dark) {
-  :root {
-    --bg: #0f172a;
-    --card: #1e293b;
-    --accent: #3b82f6;
-    --muted: #94a3b8;
-    --shadow: 0 4px 14px rgba(0, 0, 0, 0.45);
-    color-scheme: dark;
-  }
-
-  body {
-    background: var(--bg);
-    color: #f1f5f9;
-  }
-
-  .site-header,
-  .main-nav,
-  section,
-  .modal-content {
-    background: var(--card);
-    box-shadow: var(--shadow);
-  }
-
-  .main-nav a {
-    color: var(--accent);
-  }
-
-  input,
-  select,
-  textarea {
-    background: #0f1a2f;
+  .cover-select select {
+    background: #0f172a;
     border: 1px solid #334155;
     color: #e2e8f0;
   }
-  input::placeholder,
-  textarea::placeholder {
-    color: #64748b;
-  }
-  label {
-    color: #e2e8f0;
-  }
-
-  button {
-    background: var(--accent);
-    color: white;
-  }
-  button.secondary {
-    background: #334155;
-    color: var(--accent);
-  }
-
-  .book-card {
-    background: var(--card);
-    border: 1px solid #334155;
-    box-shadow: var(--shadow);
-  }
-  .book-card p,
-  .description,
-  .status,
-  .tagline {
-    color: var(--muted);
-  }
-  .modal {
-    background: rgba(15, 23, 42, 0.55);
-  }
-}
-
-/* ===========================
-     FIX PARA CARDS Y GRID (compacidad y apariencia)
-     - Este bloque corrige el problema que tenías de cards muy anchos.
-     =========================== */
-
-/* GRID más ordenado y compacto (override) */
-.books-list {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  gap: 1.2rem;
-  padding: 0.5rem;
-}
-
-/* CARD reducido y equilibrado (override) */
-.book-card {
-  display: flex;
-  flex-direction: row;
-  align-items: flex-start;
-  gap: 0.8rem;
-
-  background: var(--card);
-  border: 1px solid rgba(0, 0, 0, 0.06);
-  padding: 0.9rem;
-
-  border-radius: 12px;
-  box-shadow: var(--shadow);
-
-  transition: transform 0.15s ease, box-shadow 0.15s ease;
-}
-
-.book-card:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
-}
-
-/* Imagen más proporcionada */
-.book-card img {
-  width: 70px;
-  height: 105px;
-  border-radius: 8px;
-  object-fit: cover;
-  flex-shrink: 0;
-}
-
-/* Texto compacto */
-.book-meta {
-  flex: 1;
-}
-.book-meta h3 {
-  font-size: 1rem;
-  margin-bottom: 0.25rem;
-  line-height: 1.2;
-}
-.book-meta p {
-  margin: 0.15rem 0;
-  color: var(--muted);
-  font-size: 0.9rem;
-  line-height: 1.25;
-}
-
-/* Acciones compactas dentro del card */
-.book-actions {
-  display: flex;
-  gap: 0.4rem;
-  margin-top: 0.3rem;
-}
-.book-actions button {
-  padding: 0.35rem 0.6rem;
-  font-size: 0.85rem;
-  border-radius: 6px;
 }

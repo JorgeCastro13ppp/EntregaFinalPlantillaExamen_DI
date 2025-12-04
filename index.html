@@ -2,21 +2,20 @@
 <html lang="es">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>Mi biblioteca — Entrega Desarrollo de Interfaces</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Mi Biblioteca — Entrega Desarrollo de Interfaces</title>
 
     <!-- Hoja de estilos externa -->
     <link rel="stylesheet" href="css/estilos.css" />
   </head>
+
   <body>
     <!-- HEADER: marca y área de usuario -->
     <header class="site-header">
       <div class="brand">
         <!-- Título principal (h1) -->
         <h1 id="site-title">Mi Biblioteca</h1>
-        <p class="tagline">
-          Busca, añade y administra tus libros — práctica de HTML/CSS/JS
-        </p>
+        <p class="tagline">Busca, añade y administra tus libros — práctica de HTML/CSS/JS</p>
       </div>
 
       <!-- Área de usuario: contiene botón de login y placeholder del avatar -->
@@ -47,7 +46,7 @@
         role="dialog"
         aria-labelledby="login-title"
       >
-        <div class="modal-content">
+        <div class="modal-content" role="document">
           <h2 id="login-title">Conectar cuenta</h2>
 
           <!-- Formulario de login -->
@@ -73,14 +72,14 @@
             </div>
 
             <!-- Mensajes de error / éxito (aria-live para lectores de pantalla) -->
-            <p class="login-message" aria-live="polite" id="login-message"></p>
+            <p id="login-message" class="login-message" aria-live="polite"></p>
           </form>
         </div>
       </section>
 
       <!-- BÚSQUEDA (OpenLibrary) -->
-      <section id="buscar" class="search-section">
-        <h2>Buscar libros (OpenLibrary)</h2>
+      <section id="buscar" class="search-section" aria-labelledby="buscar-title">
+        <h2 id="buscar-title">Buscar libros (OpenLibrary)</h2>
 
         <!-- Form para búsqueda por título -->
         <form id="search-form" aria-label="Buscar libros por título">
@@ -92,9 +91,25 @@
             placeholder="Ej: Don Quijote"
             required
           />
-          <button type="submit">Buscar</button>
+
+          <label for="cover-size">Tamaño principal de carátula</label>
+          <select id="cover-size" aria-label="Seleccionar tamaño de carátula">
+            <option value="S">Pequeña (S)</option>
+            <option value="M">Mediana (M)</option>
+            <option value="L">Grande (L)</option>
+          </select>
+
+          <div class="form-actions">
+            <button type="submit">Buscar</button>
+          </div>
+
           <span id="search-status" aria-live="polite" class="status"></span>
         </form>
+
+        <!-- Spinner (loading) -->
+        <div id="spinner" class="spinner" aria-hidden="true" role="status" aria-live="polite">
+          <span class="sr-only">Cargando resultados...</span>
+        </div>
 
         <!-- Donde se muestran los resultados de la API -->
         <div id="search-results" class="grid-list" aria-live="polite"></div>
@@ -103,19 +118,13 @@
       <!-- CATÁLOGO local -->
       <section id="catalogo" aria-label="Catálogo de libros">
         <h2>Catálogo</h2>
-        <p class="description">
-          Lista de libros cargados localmente. Puedes añadir, editar o eliminar
-          elementos.
-        </p>
+        <p class="description">Lista de libros cargados localmente. Puedes añadir, editar o eliminar elementos.</p>
         <!-- Lista donde se renderizan los cards -->
-        <ul id="books-list" class="books-list"></ul>
+        <ul id="books-list" class="books-list" aria-live="polite"></ul>
       </section>
 
       <!-- FORMULARIO para añadir/editar -->
-      <section
-        id="form-agregar"
-        aria-label="Formulario para agregar o editar libros"
-      >
+      <section id="form-agregar" aria-label="Formulario para agregar o editar libros">
         <h2>Añadir / Editar libro</h2>
 
         <form id="book-form">
@@ -138,7 +147,10 @@
             <button type="submit">Guardar libro</button>
             <button type="button" id="book-clear">Limpiar</button>
           </div>
-          <p id="book-message" ar ia-live="polite" class="status"></p>
+          <p id="book-message" aria-live="polite" class="status"></p>
+          <label for="isbn">ISBN</label>
+          <input id="isbn" name="isbn" inputmode="text" placeholder="978-84-..." />
+
         </form>
       </section>
     </main>
