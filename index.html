@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Mi biblioteca — Entrega Desarrollo de Interfaces</title>
+
+    <!-- Hoja de estilos externa -->
+    <link rel="stylesheet" href="css/estilos.css" />
+  </head>
+  <body>
+    <!-- HEADER: marca y área de usuario -->
+    <header class="site-header">
+      <div class="brand">
+        <!-- Título principal (h1) -->
+        <h1 id="site-title">Mi Biblioteca</h1>
+        <p class="tagline">
+          Busca, añade y administra tus libros — práctica de HTML/CSS/JS
+        </p>
+      </div>
+
+      <!-- Área de usuario: contiene botón de login y placeholder del avatar -->
+      <div class="user-area" id="user-area">
+        <!-- Este botón abre el diálogo de login -->
+        <button id="login-open" aria-haspopup="dialog">Iniciar sesión</button>
+
+        <!-- avatar se añadirá aquí tras login -->
+        <div id="avatar-placeholder" aria-hidden="true"></div>
+      </div>
+    </header>
+
+    <!-- Navegación semántica -->
+    <nav aria-label="Navegación principal" class="main-nav">
+      <ul>
+        <li><a href="#catalogo">Catálogo</a></li>
+        <li><a href="#form-agregar">Agregar libro</a></li>
+        <li><a href="#buscar">Buscar</a></li>
+      </ul>
+    </nav>
+
+    <main>
+      <!-- DIALOG de Login: se muestra/oculta mediante aria-hidden -->
+      <section
+        id="login-dialog"
+        class="modal"
+        aria-hidden="true"
+        role="dialog"
+        aria-labelledby="login-title"
+      >
+        <div class="modal-content">
+          <h2 id="login-title">Conectar cuenta</h2>
+
+          <!-- Formulario de login -->
+          <form id="login-form">
+            <label for="username">Usuario</label>
+            <!-- inputmode numeric ayuda en móviles -->
+            <input
+              id="username"
+              name="username"
+              type="text"
+              inputmode="numeric"
+              aria-describedby="user-help"
+              required
+            />
+            <div id="user-help" class="sr-only">Usuario correcto: 1234</div>
+
+            <label for="password">Contraseña</label>
+            <input id="password" name="password" type="password" required />
+
+            <div class="form-actions">
+              <button type="submit">Entrar</button>
+              <button type="button" id="login-cancel">Cancelar</button>
+            </div>
+
+            <!-- Mensajes de error / éxito (aria-live para lectores de pantalla) -->
+            <p class="login-message" aria-live="polite" id="login-message"></p>
+          </form>
+        </div>
+      </section>
+
+      <!-- BÚSQUEDA (OpenLibrary) -->
+      <section id="buscar" class="search-section">
+        <h2>Buscar libros (OpenLibrary)</h2>
+
+        <!-- Form para búsqueda por título -->
+        <form id="search-form" aria-label="Buscar libros por título">
+          <label for="search-input">Título</label>
+          <input
+            id="search-input"
+            name="q"
+            type="search"
+            placeholder="Ej: Don Quijote"
+            required
+          />
+          <button type="submit">Buscar</button>
+          <span id="search-status" aria-live="polite" class="status"></span>
+        </form>
+
+        <!-- Donde se muestran los resultados de la API -->
+        <div id="search-results" class="grid-list" aria-live="polite"></div>
+      </section>
+
+      <!-- CATÁLOGO local -->
+      <section id="catalogo" aria-label="Catálogo de libros">
+        <h2>Catálogo</h2>
+        <p class="description">
+          Lista de libros cargados localmente. Puedes añadir, editar o eliminar
+          elementos.
+        </p>
+        <!-- Lista donde se renderizan los cards -->
+        <ul id="books-list" class="books-list"></ul>
+      </section>
+
+      <!-- FORMULARIO para añadir/editar -->
+      <section
+        id="form-agregar"
+        aria-label="Formulario para agregar o editar libros"
+      >
+        <h2>Añadir / Editar libro</h2>
+
+        <form id="book-form">
+          <!-- id oculto para edición -->
+          <input type="hidden" id="book-id" />
+
+          <label for="title">Título</label>
+          <input id="title" name="title" required />
+
+          <label for="author">Autor</label>
+          <input id="author" name="author" />
+
+          <label for="year">Año publicación</label>
+          <input id="year" name="year" type="number" min="0" />
+
+          <label for="cover">ID carátula (cover_i)</label>
+          <input id="cover" name="cover" inputmode="numeric" />
+
+          <div class="form-actions">
+            <button type="submit">Guardar libro</button>
+            <button type="button" id="book-clear">Limpiar</button>
+          </div>
+          <p id="book-message" ar ia-live="polite" class="status"></p>
+        </form>
+      </section>
+    </main>
+
+    <footer>
+      <p>Entrega — Desarrollo de Interfaces • Jorge</p>
+    </footer>
+
+    <!-- Script principal -->
+    <script src="js/app.js" defer></script>
+  </body>
+</html>
